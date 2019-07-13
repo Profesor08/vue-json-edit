@@ -60,6 +60,7 @@
             <template v-if="member.type == 'object'">
               <json-view
                 :parsedData="parsedData[index].childParams"
+                :search="search"
                 v-model="parsedData[index].childParams"
               ></json-view>
             </template>
@@ -95,7 +96,7 @@ import ItemAddForm from "./ItemAddForm.vue";
 
 export default {
   name: "ArrayView",
-  props: ["parsedData"],
+  props: ["parsedData", "search"],
   data: function() {
     return {
       flowData: this.parsedData,
@@ -150,7 +151,8 @@ export default {
       this.flowData.push(oj);
       this.$emit("input", this.flowData);
       this.cancelNewItem();
-    }
+    },
+
   }
 };
 </script>

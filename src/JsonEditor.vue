@@ -1,6 +1,7 @@
 <template>
   <json-view 
     :parsedData="parsedData" 
+    :search="search"
     v-model="parsedData"></json-view>
 </template>
 
@@ -14,6 +15,9 @@ export default {
     },
     options: {
       type: Object,
+    },
+    search: {
+      type: String
     }
   },
   provide () {

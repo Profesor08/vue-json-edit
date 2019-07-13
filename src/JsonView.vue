@@ -3,7 +3,7 @@
     <span
       v-for="(item, index) in flowData"
       :key="index"
-      :class="['block', 'clearfix', {'hide-block': hideMyBlock[index] == true}]"
+      :class="['block', 'clearfix', {'hide-block': hideMyBlock[index] == true}, {'is-not-visible': !isTreeVisible(item)}]"
     >
       <span class="json-key">
         <input
@@ -38,11 +38,11 @@
       </span>
       <span class="json-val">
         <template v-if="item.type == 'object'">
-          <json-view :parsedData="item.childParams" v-model="item.childParams"></json-view>
+          <json-view :parsedData="item.childParams" :search="search" v-model="item.childParams"></json-view>
         </template>
 
         <template v-else-if="item.type == 'array'">
-          <array-view :parsedData="item.childParams" v-model="item.childParams"></array-view>
+          <array-view :parsedData="item.childParams" :search="search" v-model="item.childParams"></array-view>
         </template>
 
         <template v-else>
@@ -91,7 +91,9 @@ import ItemAddForm from "./ItemAddForm.vue";
 
 export default {
   name: "JsonView",
-  props: { parsedData: {} },
+  props: { parsedData: {}, search: {
+    type: String
+  } },
   data () {
     return {
       flowData: this.parsedData,
@@ -164,7 +166,38 @@ export default {
         item.name = "null";
         e.target.focus();
       }
+    },
+
+
+    isTreeVisible: function(flowData) {
+      if (this.search.length === 0) {
+        return true;
+      }
+
+      let isVisible = false;
+
+      const search = data => {
+        if (data.name && data.name.trim().toLowerCase().includes(this.search.trim().toLowerCase())) {
+          isVisible = true;
+        }        
+        else if (typeof data.remark === "string" && data.remark.trim().toLowerCase().includes(this.search.trim().toLowerCase())) {
+          isVisible = true;
+        }        
+        else if (typeof data.remark === "number" && data.remark.toString().toLowerCase().includes(this.search.trim().toLowerCase())) {
+          isVisible = true;
+        }
+        else if (Array.isArray(data.childParams)) {
+          data.childParams.forEach(data => {
+            search(data);
+          });
+        }
+      }
+
+
+      search(flowData);
+
+      return isVisible;
     }
-  }
+  },
 };
 </script>

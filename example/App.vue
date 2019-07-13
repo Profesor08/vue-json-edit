@@ -4,12 +4,14 @@
 		<div class="editor-w clearfix">
 			<div class="w-2">
 				<div class="editor">
+					<input type="text" v-model="search">
 					<JsonEditor
 						:options="{
 							confirmText: 'confirm',
 							cancelText: 'cancel',
 						}"
 						:objData="jsonData" 
+						:search="search"
 						v-model="jsonData" ></JsonEditor>
 				</div>
 			</div>
@@ -33,18 +35,167 @@ export default {
 	name: 'app',
 	data: function() {
 		return {
+			search: "",
+			
 			jsonData: {
-				name: 'may',
-				age: 23,
-				address: ['Panyu Shiqiao on Canton', 'Tianhe', {
-					city: 'forida meta 11'
-				}],
-				ohters: {
-					id: 1246,
-					joinTime: '2017-08-20. 10:20',
-					description: 'another'
-				}
-			}
+        resets_column: "ResetCount",
+        grand_resets_column: "MasterResetCount",
+        cahce_global: false,
+        currency: {
+          wcoinc: {
+            table: "CashShopData",
+            column: "WCoinC",
+            account: "AccountID",
+          },
+          wcoinp: {
+            table: "CashShopData",
+            column: "WCoinP",
+            account: "AccountID",
+          },
+          goblin_point: {
+            table: "CashShopData",
+            column: "GoblinPoint",
+            account: "AccountID",
+          },
+        },
+        gens: {
+          family: {
+            table: "Gens_Rank",
+            column: "Family",
+            contribution: "Contribution",
+            character: "Name",
+          },
+          rank: { table: "Gens_Reward", column: "Rank", character: "Name" },
+        },
+        crywolf: {
+          table: "WZ_CW_INFO",
+          occupy: "CRYWOLF_OCCUFY",
+          state: "CRYWOLF_STATE",
+        },
+        events: {
+          regular: [
+            [
+              "BloodCastle",
+              0,
+              "01:00",
+              "03:00",
+              "05:00",
+              "07:00",
+              "09:00",
+              "11:00",
+              "13:00",
+              "15:00",
+              "17:00",
+              "19:00",
+              "21:00",
+              "23:00",
+            ],
+            [
+              "DevilSquare",
+              0,
+              "00:00",
+              "02:00",
+              "04:00",
+              "06:00",
+              "08:00",
+              "10:00",
+              "12:00",
+              "14:00",
+              "16:00",
+              "18:00",
+              "20:00",
+              "22:00",
+            ],
+            [
+              "Chaos Castle",
+              0,
+              "00:30",
+              "02:30",
+              "06:30",
+              "10:30",
+              "18:30",
+              "22:30",
+            ],
+            ["Happy Hour", 0, "08:30", "20:30"],
+            ["Lorencia Battle", 0, "19:30"],
+            ["Drop Event", 0, "10:00", "20:00"],
+            ["Happy Hour", 0, "19:00"],
+            ["Question Answer", 0, "17:30", "21:30"],
+            ["Search Event", 0, "04:30", "16:30"],
+            [
+              "White Wizard",
+              0,
+              "00:40",
+              "03:40",
+              "06:40",
+              "09:40",
+              "12:40",
+              "15:40",
+              "18:40",
+              "21:40",
+            ],
+          ],
+          bosses: [
+            [
+              "Golden Invasion",
+              0,
+              "09:48",
+              "11:10",
+              "15:30",
+              "16:25",
+              "20:25",
+              "21:10",
+            ],
+            [
+              "Kundum",
+              1,
+              "01:00",
+              "03:00",
+              "05:00",
+              "07:00",
+              "09:00",
+              "11:00",
+              "13:00",
+              "15:00",
+              "17:00",
+              "19:00",
+              "21:00",
+              "23:00",
+            ],
+            [
+              "Medusa",
+              1,
+              "00:00",
+              "02:00",
+              "04:00",
+              "06:00",
+              "08:00",
+              "10:00",
+              "12:00",
+              "14:00",
+              "16:00",
+              "18:00",
+              "20:00",
+              "22:00",
+            ],
+            ["Erohim", 1, "00:30", "02:30", "06:30", "10:30", "18:30", "22:30"],
+            [
+              "White Wizard",
+              1,
+              "09:48",
+              "11:10",
+              "15:30",
+              "16:25",
+              "20:25",
+              "21:10",
+            ],
+            ["Selupan", 1, "08:30", "20:30"],
+            ["Nightmare", 1, "19:30"],
+            ["Red Dragon", 1, "10:00", "20:00"],
+            ["Skeleton King", 1, "19:00"],
+          ],
+        },
+      }
 		}
 	},
 	watch: {
